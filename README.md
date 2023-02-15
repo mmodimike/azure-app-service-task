@@ -13,7 +13,7 @@
       <a href="#steps">Steps</a>
     </li>
     <li>
-      <a href="#conclusions">Conclusions / After thoughts</a>
+      <a href="#afterthoughts">Afterthoughts</a>
     </li>
   </ol><br/><br/>
 
@@ -223,8 +223,8 @@ This is the status after deployment<br/>
 <br/><br/>
 
 
-<!-- Conclusions / After thoughts -->
-# Conclusions / After thoughts
+<!-- Afterthoughts -->
+# Afterthoughts
 I approached the task with zero knowledge in App Services & Slots. I also had no prior experience with Git Actions.<br/>
 Invested about 2 hours understanding the concepts then jupmed into Azure and started to play around.<br/>
 About 5-6 hours in I had a working example configured manually, so I decided to take a step back & start implementing my manual actions as IAS as I felt it would elevate my solution.<br/>
