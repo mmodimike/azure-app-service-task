@@ -1,34 +1,27 @@
 
 <!-- TABLE OF CONTENTS -->
-<details>
+
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
+      <a href="#task-instructions">Task Instructions</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
+      <a href="#high-level-plan">High Level Plan</a>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+    <li>
+      <a href="#steps">Steps</a>
+    </li>
+    <li>
+      <a href="#conclusions">Conclusions / After thoughts</a>
+    </li>
+  </ol><br/><br/>
 
 
 
-<!-- ABOUT THE PROJECT -->
-## The Task Instructions 
+
+<!-- Task Instructions -->
+# Task Instructions 
 Create an Azure app service that alerts when CPU is higher than 50% for over 5 minutes.<br/>
 Please deploy a file index.html that says “Hello World1” and connect a repo of your choice.<br/>
 Then, update the repo with “Hello World2” and deploy it again.<br/>
@@ -36,10 +29,10 @@ The deployment should swap between slots of the app service.
 <br/><br/><br/>
 
 <!-- High Level Plan -->
-# <ins>High Level Plan<ins/>
+# High Level Plan
 I will break the task into two parts:
 * Setting up the infra & deploy configuration
-* Setting up the alert<br/><br/> 
+* Setting up the alert
 
 
 Here is a high level description of what I will be doing to reach our goal for part 1:
@@ -69,14 +62,14 @@ Here is a high level description of what I will be doing to reach our goal for p
 ### Azure
 
 
-<!-- Getting Started -->
-# <ins>Steps</ins>
+<!-- Steps -->
+# Steps
 Here is a step to step breakdown explaining what I did to set up our Azure App. 
 <br/><br/><br/>
 
 
-
-# <ins>Step 1</ins> - <b>Create a Git Repo</b>
+<!-- Step 1 - Create a Git Repo -->
+# Step 1 - Create a Git Repo
 Create a new repo by forking a .NET 6 Hello world project.<br/>
 Original forker repo can be found [here](https://github.com/Azure-Samples/dotnetcore-docs-hello-world).
 
@@ -84,7 +77,8 @@ Original forker repo can be found [here](https://github.com/Azure-Samples/dotnet
  <br/><br/>
 
 
-# <ins>Step 2</ins> - <b>Create Resource Group</b>
+<!-- Step 2 - Create Resource Group -->
+# Step 2 - Create Resource Group
 We can use azcli to create a resource group to contain all of the Azure resources for this service.
   ```sh
   az group create -l westeurope -n app_service_rg_v1
@@ -94,7 +88,7 @@ We can use azcli to create a resource group to contain all of the Azure resource
  <br/><br/>
 
 
- # <ins>Step 3</ins> - <b>Create App Service</b>
+ # Step 3 - Create App Service
 Using azure portal, navigate to resource group → create → App Service Plan <br/>
  <img src="images/image5.png"> <br/>
  
@@ -108,7 +102,7 @@ _"App Service Plan Create operation is throttled for subscription cdcb5303-2664-
 <br/><br/>
 
 
-# <ins>Step 4</ins> - <b>Create Web App</b>
+# Step 4 - Create Web App
 Under App Services click create Web App.<br/>
 Make sure to Enable Continuous deployment under Github Action Settings. This option will auto-generate a git Actions workflow which we will be using.
  <img src="images/image8.png"> <br/>
@@ -117,7 +111,7 @@ Make sure to Enable Continuous deployment under Github Action Settings. This opt
 
 <br/><br/>
 
-# <ins>Step 5</ins> - <b>Add a second deployment slot</b>
+# Step 5 - Add a second deployment slot
 Go to the resource group → App Service.<br/>
 Under Deployment Slots → Add Slot → ( we will call it staging )<br/>
  <img src="images/image3.png"> 
@@ -126,7 +120,7 @@ Under Deployment Slots → Add Slot → ( we will call it staging )<br/>
 <br/><br/>
 
 
-# <ins>Step 6</ins> - <b>Deploy Hello World 1<b/>
+# Step 6 - Deploy Hello World 1
 Currently, we have two slots:
 * Production: https://easytraveling.azurewebsites.net/<br/>
   _Our app is currently deployed here, currently it displays this_<br/>
@@ -156,7 +150,7 @@ After the above commit, this is the status of our environments:<br/>
 <br/><br/>
 
 
-# <ins>Step 7</ins> - <b>Configure the “staging” deployment slot for auto swap<b/>
+# Step 7 - Configure the “staging” deployment slot for auto swap
 * Go to the resource group → staging (easytraveling/staging) (App Service Slot)<br/>
 * On the left bar Setting menu → Configuration → General settings<br/>
 * Scroll Down to Deployment Slot:<br/>
@@ -167,7 +161,7 @@ After the above commit, this is the status of our environments:<br/>
 <br/><br/>
 
 
-# <ins>Step 8</ins> - <b>Alter gitflow workflow to target staging slot instead of Production<b/>
+# Step 8 - Alter gitflow workflow to target staging slot instead of Production
 Our .yml file can be found here:<br/>
 We want to change slot name to staging.<br/>
 https://github.com/hammodisorg/EasyTraveling/blob/master/.github/workflows/master_easytraveling.yml<br/>
@@ -177,7 +171,7 @@ https://github.com/hammodisorg/EasyTraveling/blob/master/.github/workflows/maste
 <br/><br/>
 
 
-# <ins>Step 9</ins> - <b>Update publish-profile Secret for Git Actions<b/>
+# Step 9 - pdate publish-profile Secret for Git Actions
 We Will Also have to update the Git Actions secret to reflect the staging slot publish-profile, instead of the existing production publish-profile.<br/>
 This is done by navigating to staging slot on Azure and clicking “Download publish profile” from the top bar.<br/>
 <img src="images/image10.png" width="60%" height="60%"> <br/><br/>
@@ -189,7 +183,7 @@ We then update the secret value in our Github Repo by navigating to Settings -->
 <br/><br/>
 
 
-# <ins>Step 10</ins> - <b>Update Repo index with Hello World 2<b/>
+# Step 10 - Update Repo index with Hello World 2
 Finally, we will change index.cshtml to Hello World 2.<br/>
 _( I grouped this commit with the above gitflow change as to trigger a single deployment)_<br/><br/>
 
@@ -209,7 +203,7 @@ This is the status after deployment<br/>
 <br/><br/>
 
 
-# <ins>Step 11</ins> - <b>Verify it works again<b/>
+# Step 11 - Verify it works again
 I will disconnect the production slot from a Source code and commit a Hello World 3 to our repo.<br/> 
 This step does not appear to be necessary as the workflow determines target enviroment, but for the time being this sounds safer to avoid unwanted mistakes.<br/>
 Expected result is to have it deployed to staging, swapped into production.<br/>
@@ -227,3 +221,34 @@ This is the status after deployment<br/>
 
 
 <br/><br/>
+
+
+<!-- Conclusions / After thoughts -->
+# Conclusions / After thoughts
+I approached the task with zero knowledge in App Services & Slots. I also had no prior experience with Git Actions.<br/>
+Invested about 2 hours understanding the concepts then jupmed into Azure and started to play around.<br/>
+About 5-6 hours in I had a working example configured manually, so I decided to take a step back & start implementing my manual actions as IAS as I felt it would elevate my solution.<br/>
+I'm comfortable with Terraform so I had executable terraform code that creates all the needed resources within a couple of hours.<br/><br/>
+
+However, that's when I started running into problems. Upon swapping, Terraform state was being altered.<br/>
+I found some work arounds which involved re-importing state after applying, however it was totally out of scope of this project and sounded like a bandaid. <br/>
+I would need to invest some more time to understand if infact Terraform is a sutible tool for such an app.<br/><br/>
+
+
+Another issue was Terraform apply was taking too long and slowing down my development cycles,<br/> 
+particually provisioning azurerm_service_plan,<br/> 
+so I decided to reference the one I had already created manually and continue working.<br/><br/>
+
+Picked up the next day & tried to provision azurerm_service_plan so I can finialize my project, but I was getting throtteled by Azure:<br/>
+_"App Service Plan Create operation is throttled for subscription cdcb5303-2664-4b37-a610-8b0840d8206d. Please contact support if issue persists."_<br/>
+Some [Quick Googling](https://stackoverflow.com/questions/70581454/app-service-plan-create-operation-is-throttled-for-subscription) indicated that I was either dealing with a known issue, something to do with having a small subscription or relativly new/unused subscription. Could also be regional limitations & availability .<br/><br/>
+
+Having exhausted resources into trying to make Terraform work, & due to the lack of time I decided to give up on a IAS solution for now & play it safe to meet the deadline, hence submitting my manual findings in a .README format & explaining my thought process / conclusions afterwards.<br/><br/>
+
+Generally speaking, this was a really enjoyable task & i'm impressed with the possibilities of the swapping conept.
+
+
+
+
+
+
